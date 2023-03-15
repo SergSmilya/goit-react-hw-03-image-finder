@@ -1,6 +1,15 @@
 import { search } from '../Utils/Api';
+
 export const App = () => {
-  search('cat').then(({ data }) => console.log(data.hits));
+  search('cat').then(({ data: { totalHits, hits } }) => {
+    if (totalHits > 0) {
+      // hits це масив
+      console.log(hits);
+    } else {
+      console.log('No hits');
+    }
+  });
+
   return (
     <div
       style={{
