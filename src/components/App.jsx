@@ -29,6 +29,7 @@ export default class App extends Component {
     gallerys: [],
     value: '',
     visibleSpinerBool: false,
+    totalHits: 0,
   };
 
   handleWriteValueInStateOfSubmit = valueString => {
@@ -46,8 +47,8 @@ export default class App extends Component {
         .then(({ data: { totalHits, hits } }) => {
           if (totalHits > 0) {
             // hits це масив
-            // console.log(hits);
-            this.setState({ gallerys: hits });
+            // console.log(totalHits, total);
+            this.setState({ gallerys: hits, totalHits });
           } else {
             notify();
           }
@@ -73,7 +74,8 @@ export default class App extends Component {
   };
 
   render() {
-    const { gallerys, visibleSpinerBool } = this.state;
+    const { gallerys, visibleSpinerBool, totalHits } = this.state;
+    console.log(totalHits);
 
     return (
       <div className={css.App}>
@@ -85,7 +87,7 @@ export default class App extends Component {
           <ImageGallery gallerys={gallerys} />
         )}
 
-        {gallerys.length !== 0 && (
+        {gallerys.length !== totalHits && (
           <Button
             handleLoadMore={this.handleLoadMore}
             visibleSpinerBool={visibleSpinerBool}
